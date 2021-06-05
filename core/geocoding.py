@@ -1,4 +1,4 @@
-from app.settings import GEOCODING_API, API_KEY
+from app.settings import GEOCODING_API, GEOCODING_API_KEY
 import requests
 
 def get_latlong(address: str) -> tuple : 
@@ -12,5 +12,5 @@ def get_latlong(address: str) -> tuple :
         tuple: [returns a tuple of floating numbers, the latitude and the longitude of the address]
     """
 
-    response =  requests.get(GEOCODING_API.format(API_KEY ,address))
-    pass
+    response =  requests.get(GEOCODING_API.format(GEOCODING_API_KEY ,address))
+    return response.json.get("latitude", None), response.json.get("longitude", None)

@@ -1,13 +1,18 @@
+
+import time
+import csv
+
 from django.core.management.base import BaseCommand
 from subprocess import Popen
 from sys import stdout, stdin, stderr
-import time
-import csv
+
 from core.models import Customer
+from core import geocoding
 
 
 class Command(BaseCommand):
     help = 'Bootstrap command to populate the datebase'
+
     commands = [
         "python manage.py migrate",
         "python manage.py makemigrations",
@@ -15,11 +20,13 @@ class Command(BaseCommand):
         ]
 
     def handle(self, *args, **kwargs):
+
         # Perform migrations of the database models and dbfile
         for command in self.commands:
             self.stdout.write(self.style.SUCCESS('$ ' + command))
             Popen(command, shell=True, stdin=stdin, stdout=stdout, stderr=stderr)
             time.sleep(1)
+
 
         # Perform the database population
         file_path = 'customers.csv'
@@ -27,7 +34,8 @@ class Command(BaseCommand):
             spamreader = csv.reader(csvfile, delimiter=',')
             for row in spamreader:
                 id,first_name,last_name,email,gender,company,city,title = row
-                customer = Customer(id,first_name,last_name,email,gender,company,city,title, None, None)
+                latitude, longitude = geocoding(city)
+                customer = Customer(id,first_name,last_name,email,gender,company,city,title, latitude, longitude)
                 customer.save()
 
             self.stdout.write(self.style.SUCCESS('Database populated'))
