@@ -120,5 +120,10 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-GEOCODING_API = "api.positionstack.com/v1/forward?access_key={API_KEY}&query={location}"
+GEOCODING_API = "api.positionstack.com/v1/forward?access_key={}&query={}"
 GEOCODING_API_KEY = "63546a10f6aa84afd4d2d821df632015"
+
+### 
+# External protocols
+
+PROTOCOL = "http"

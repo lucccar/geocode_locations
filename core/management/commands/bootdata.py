@@ -7,7 +7,7 @@ from subprocess import Popen
 from sys import stdout, stdin, stderr
 
 from core.models import Customer
-from core import geocoding
+from core.geocoding import Geocoding
 
 
 class Command(BaseCommand):
@@ -32,10 +32,11 @@ class Command(BaseCommand):
         file_path = 'customers.csv'
         with open(file_path, newline='') as csvfile:
             spamreader = csv.reader(csvfile, delimiter=',')
+            next(spamreader)
             for row in spamreader:
-                id,first_name,last_name,email,gender,company,city,title = row
-                latitude, longitude = geocoding(city)
-                customer = Customer(id,first_name,last_name,email,gender,company,city,title, latitude, longitude)
+                id, first_name, last_name, email, gender, company, city, title = row
+                latitude, longitude = Geocoding.get_latlong(city)
+                customer = Customer(id, first_name, last_name, email, gender, company, city, title, latitude, longitude)
                 customer.save()
 
             self.stdout.write(self.style.SUCCESS('Database populated'))
