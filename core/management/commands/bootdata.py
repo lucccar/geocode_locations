@@ -8,23 +8,27 @@ from core.models import Customer
 
 class Command(BaseCommand):
     help = 'Bootstrap command to populate the datebase'
-    commands = ["python manage.py migrate"]
+    commands = [
+        "python manage.py migrate",
+        "python manage.py makemigrations",
+        "python manage.py migrate --run-syncdb"
+        ]
 
     def handle(self, *args, **kwargs):
-
+        # Perform migrations of the database models and dbfile
         for command in self.commands:
-            print("$ " + command)
-            proc = Popen(command, shell=True, stdin=stdin, stdout=stdout, stderr=stderr)
-            # proc_list.append(proc)
+            self.stdout.write(self.style.SUCCESS('$ ' + command))
+            Popen(command, shell=True, stdin=stdin, stdout=stdout, stderr=stderr)
+            time.sleep(1)
 
-        time.sleep(1)
-
+        # Perform the database population
         file_path = 'customers.csv'
         with open(file_path, newline='') as csvfile:
             spamreader = csv.reader(csvfile, delimiter=',')
             for row in spamreader:
                 id,first_name,last_name,email,gender,company,city,title = row
-                customer = Customer(id,first_name,last_name,email,gender,company,city,title)
+                customer = Customer(id,first_name,last_name,email,gender,company,city,title, None, None)
                 customer.save()
-            self.stdout.write("Database populated")
+
+            self.stdout.write(self.style.SUCCESS('Database populated'))
             

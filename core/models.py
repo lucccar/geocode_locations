@@ -10,5 +10,5 @@ class Customer(models.Model):
     company = models.CharField(max_length=15)
     city = models.CharField(max_length=25)
     title = models.CharField(max_length=30)
-    latitude = models.FloatField(max_length=11)
-    longitude = models.FloatField(max_length=11)
+    latitude = models.FloatField(max_length=11, null=True, blank=True)
+    longitude = models.FloatField(max_length=11, null=True, blank=True)
