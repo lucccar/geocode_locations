@@ -77,7 +77,7 @@ WSGI_APPLICATION = 'app.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'NAME': os.path.join(BASE_DIR, 'core', 'database', 'db.sqlite3'),
     }
 }
 
@@ -120,10 +120,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-GEOCODING_API = "api.positionstack.com/v1/forward?access_key={}&query={}"
+GEOCODING_ENDPOINT = "api.positionstack.com/v1/forward?access_key={}&query={}"
 GEOCODING_API_KEY = "63546a10f6aa84afd4d2d821df632015"
-
-### 
-# External protocols
-
+FILE_PATH = "customers.csv"
 PROTOCOL = "http"
