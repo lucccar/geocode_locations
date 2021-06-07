@@ -5,3 +5,11 @@ from django.http import HttpResponse
 
 def home(request):
     return HttpResponse('basic')
+
+
+def get_customer_by_id(request):
+    return HttpResponse('basic')
+
+
+def get_all_customers(request):
+    return HttpResponse('basic')

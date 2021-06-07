@@ -20,4 +20,6 @@ from . import views
 
 urlpatterns = [
     path('', views.home, name="app-home"),
+    path('customers/<id>', views.get_customer_by_id, name='customer-by-id'),
+    path('customers/all', views.get_all_customers, name='all-customers')
 ]

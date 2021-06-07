@@ -120,7 +120,10 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-GEOCODING_ENDPOINT = "api.positionstack.com/v1/forward?access_key={}&query={}"
-GEOCODING_API_KEY = "63546a10f6aa84afd4d2d821df632015"
+# GEOCODING_ENDPOINT = "api.positionstack.com/v1/forward?access_key={}&query={}"
+GEOCODING_ENDPOINT = "maps.googleapis.com/maps/api/geocode/json?address={}&key={}"
+
+# GEOCODING_API_KEY = "63546a10f6aa84afd4d2d821df632015"
+GEOCODING_API_KEY = "AIzaSyCqhqZWcA_tY0vmFtUEis_8WIIuSPWMt8E"
 FILE_PATH = "customers.csv"
-PROTOCOL = "http"
+PROTOCOL = "https"

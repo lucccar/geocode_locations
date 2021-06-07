@@ -22,7 +22,7 @@ def handle_response(response):
     Returns:
         json: A json with all information from a localitty. 
     """
-
-    for js in response.json()["data"]:
-        if js["country"] == "United States":
-            return js
+    if len(response.json()["data"]) > 1:
+        for js in response.json()["data"]:
+            if js["country"] == "United States":
+                return js

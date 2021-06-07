@@ -5,27 +5,36 @@ from core.util.util import validate_response, handle_response
 
 
 class Geocoding:
-    # def __init__(self, *args, **kwargs) -> None:
-    #     super().__init__(*args, **kwargs)
-
-        
 
     @staticmethod
     def get_latlong(address: str) -> tuple : 
-        """[Performs a request to the endpoint defined at app.settings.GEOCODING_ENDPOINT, it retrieves a 
-            json from which is extracted the latitude and the longitude]
+        """Performs a request to the endpoint defined at app.settings.GEOCODING_ENDPOINT, it retrieves a 
+            json from which is extracted the latitude and the longitude. 
+            If the Geocode API was not able to find any location matching the address, the functions returns None, None.
 
         Args:
-            address (str): [The address to be send to the api as parameter and geocoded as latitude and longitude]
+            address (str): The address to be send to the api as parameter and geocoded as latitude and longitude
 
         Returns:
-            tuple: [returns a tuple of floating numbers, the latitude and the longitude of the address]
+            tuple: returns a tuple of floating numbers, the latitude and the longitude of the address
         """
-        url = PROTOCOL + "://" + GEOCODING_ENDPOINT.format(GEOCODING_API_KEY ,address)
-        response =  requests.get(url)
-        validate_response(response)
-        local = handle_response(response)
-        return local.get("latitude", None), local.get("longitude", None)
+
+        try:
+            url = PROTOCOL + "://" + GEOCODING_ENDPOINT.format(address, GEOCODING_API_KEY)
+            response =  requests.get(url)
+            validate_response(response)
+
+            if len(response.json()["results"]) != 0:
+                data = response.json()["results"][0]
+                return data["geometry"]["location"].get("lat", None), data["geometry"]["location"].get("lng", None)
+            else:
+                return None, None
+
+        except AttributeError as e:
+            print("response: ",response.json())
+            print(e)
+        except Exception as e:
+            print(e)
 
 
 
