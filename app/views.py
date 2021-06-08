@@ -1,8 +1,9 @@
 from django.http import HttpResponse
 from core.data_access.customerdao import CustomerDAO
 from django.views import View
+from rest_framework.views import APIView
 
-class CustomerView(View):
+class CustomerView(APIView):
 
 
     def get(self, request, id=None):

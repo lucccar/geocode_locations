@@ -38,27 +38,32 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # 'rest_framework_swagger',
+    'drf_yasg',
     'core',
     'app',
-    'drf_yasg',
+
 ]
 
-
-SWAGGER_SETTINGS = {
-    'DEFAULT_INFO': 'app.urls.open_api_object',
-    'USE_SESSION_AUTH': False,
-    'SECURITY_DEFINITIONS': {
-        'api_key': {
-            'type': 'apiKey',
-            'in': 'header',
-            'name': 'Authorization'
-        }
-    },
-    'APIS_SORTER': 'alpha',
-    'SUPPORTED_SUBMIT_METHODS': ['get', 'post', 'put', 'delete', 'patch'],
-    'OPERATIONS_SORTER': 'alpha',
-    'VALIDATOR_URL': 'http://localhost:8189'
+REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema'  # <-- Here
 }
+
+# SWAGGER_SETTINGS = {
+#     'DEFAULT_INFO': 'app.urls.open_api_object',
+#     'USE_SESSION_AUTH': False,
+#     'SECURITY_DEFINITIONS': {
+#         'api_key': {
+#             'type': 'apiKey',
+#             'in': 'header',
+#             'name': 'Authorization'
+#         }
+#     },
+#     'APIS_SORTER': 'alpha',
+#     'SUPPORTED_SUBMIT_METHODS': ['get', 'post', 'put', 'delete', 'patch'],
+#     'OPERATIONS_SORTER': 'alpha',
+#     'VALIDATOR_URL': 'http://localhost:8189'
+# }
 
 
 MIDDLEWARE = [
