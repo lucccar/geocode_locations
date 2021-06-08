@@ -5,7 +5,10 @@ WORKDIR /geocode
 
 ENV PYTHONUNBUFFERED 1
 
-RUN "python manage.py bootdata"
+RUN pip install --upgrade pip
+RUN pip install -r requirements.txt
+RUN python manage.py bootdata
+
 
 EXPOSE 8000
 
