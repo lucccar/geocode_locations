@@ -1,17 +1,24 @@
+from django.http import JsonResponse
+from django.core import serializers
+import json
+
 from core.models import Customer
 
 class CustomerDAO:
 
-    def get_all_customers(self) -> list:
+    @staticmethod
+    def get_all_customers() -> list:
 
         print("Getting all customers the database...")
-        return Customer.objects.all()
+        return serializers.serialize('json', Customer.objects.all())
 
 
-    def get_customer_by_id(self, id: int) -> list:
+    @staticmethod
+    def get_customer_by_id(id: int) -> list:
 
         print("Getting customer {} the database...".format(id))
-        return Customer.objects.get(pk=id)
+        data = Customer.objects.get(pk=id)
+        return serializers.serialize('json', [data], ensure_ascii=False)
 
 
     def initialize_customer_table(self, customer) -> None:

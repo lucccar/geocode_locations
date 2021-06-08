@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 
 import os
 
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -20,7 +21,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'bp%wyzms)smfsxk!jp4r9+m93+_yvcnj)0d@w*nnpe43o$z(e^'
+SECRET_KEY = 'bp%wyzms0smfsxk!jp4r9+m93+_yvcnjL0d@w*nnpe43o$z%e^'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -38,7 +39,27 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'core',
+    'app',
+    'drf_yasg',
 ]
+
+
+SWAGGER_SETTINGS = {
+    'DEFAULT_INFO': 'app.urls.open_api_object',
+    'USE_SESSION_AUTH': False,
+    'SECURITY_DEFINITIONS': {
+        'api_key': {
+            'type': 'apiKey',
+            'in': 'header',
+            'name': 'Authorization'
+        }
+    },
+    'APIS_SORTER': 'alpha',
+    'SUPPORTED_SUBMIT_METHODS': ['get', 'post', 'put', 'delete', 'patch'],
+    'OPERATIONS_SORTER': 'alpha',
+    'VALIDATOR_URL': 'http://localhost:8189'
+}
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -127,3 +148,4 @@ GEOCODING_ENDPOINT = "maps.googleapis.com/maps/api/geocode/json?address={}&key={
 GEOCODING_API_KEY = "AIzaSyCqhqZWcA_tY0vmFtUEis_8WIIuSPWMt8E"
 FILE_PATH = "customers.csv"
 PROTOCOL = "https"
+
