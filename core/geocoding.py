@@ -1,7 +1,7 @@
 import requests
 
 from app.settings import GEOCODING_ENDPOINT, GEOCODING_API_KEY, PROTOCOL
-from core.util.util import validate_response, handle_response
+from core.util.util import validate_response
 
 
 class Geocoding:

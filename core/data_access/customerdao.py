@@ -1,7 +1,4 @@
-from django.http import JsonResponse
 from django.core import serializers
-import json
-
 from core.models import Customer
 
 class CustomerDAO:
