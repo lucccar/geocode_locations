@@ -33,4 +33,6 @@ class TestViews(TestCase):
     def test_customer_by_id(self):
 
         response = self.client.get(self.customer_by_id)
+        print(response.json())
         self.assertEquals(response.status_code, 200)
+        self.assertEquals(response.json()[0]["fields"]["latitude"], 77.2254)
