@@ -21,12 +21,15 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'bp%wyzms0smfsxk!jp4r9+m93+_yvcnjL0d@w*nnpe43o$z%e^'
+SECRET_KEY = os.environ.get('SECRET_KEY', 'changeme')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = bool(int(os.environ.get('DEBUG', 1)))
 
 ALLOWED_HOSTS = []
+ALLOWED_HOSTS_ENV = os.environ.get('ALLOWED_HOSTS')
+if ALLOWED_HOSTS_ENV:
+    ALLOWED_HOSTS.extend(ALLOWED_HOSTS_ENV.split(','))
 
 
 # Application definition
@@ -125,16 +128,11 @@ USE_L10N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/2.2/howto/static-files/
-
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, STATIC_URL)
 
-# GEOCODING_ENDPOINT = "api.positionstack.com/v1/forward?access_key={}&query={}"
 GEOCODING_ENDPOINT = "maps.googleapis.com/maps/api/geocode/json?address={}&key={}"
-
-# GEOCODING_API_KEY = "63546a10f6aa84afd4d2d821df632015"
-GEOCODING_API_KEY = "AIzaSyCqhqZWcA_tY0vmFtUEis_8WIIuSPWMt8E"
+GEOCODING_API_KEY = os.environ.get('GEOCODING_API_KEY')
 FILE_PATH = "customers.csv"
 PROTOCOL = "https"
 
