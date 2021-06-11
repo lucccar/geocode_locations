@@ -1,0 +1,44 @@
+version: '3.7'
+
+services:
+    geocode:
+        build: 
+            context: .
+            dockerfile: ./geocode/Dockerfile
+        expose:
+            - "8000"
+        ports: 
+            - "8000:8000"
+        volumes: 
+            - static_volume:/compose/geocode/static
+        environment: 
+            - SECRET_KEY=1q2w3e4r
+            - GEOCODING_API_KEY=AIzaSyCqhqZWcA_tY0vmFtUEis_8WIIuSPWMt8E
+            - ALLOWED_HOSTS=127.0.0.1,127.0.0.2,localhost,0.0.0.0
+            - DEBUG=0
+        container_name: geocode
+        restart: "on-failure"
+        networks:
+            - app-network
+
+    nginx:
+        image: nginxinc/nginx-unprivileged:1-alpine
+        build: 
+            context: .
+            dockerfile: ./nginx/Dockerfile
+        ports: 
+            - "8080:8080"
+        volumes: 
+            - static_volume:/compose/geocode/static
+        depends_on: 
+            - geocode
+        container_name: nginx
+        restart: "on-failure"
+        networks:
+            - app-network
+
+networks:
+    app-network:
+        driver: bridge  
+volumes: 
+    static_volume:
