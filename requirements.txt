@@ -1,5 +1,9 @@
-django  
+docker-py
+cython
+gunicorn==20.1.0
+django>=2.2.16<3.0  
 django-rest-swagger==2.2.0       
 djangorestframework==3.12.4           
 drf-yasg==1.20.0
 llvmlite==0.36.0
+
